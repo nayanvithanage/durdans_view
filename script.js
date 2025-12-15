@@ -433,7 +433,7 @@ function enterSystem(systemKey) {
 function createBackButton() {
     const btn = document.createElement('button');
     btn.id = 'back-btn';
-    btn.innerText = "← Back to Universe";
+    btn.innerText = "←";
     // Styles moved to CSS
     btn.onclick = exitSystem;
     document.body.appendChild(btn);

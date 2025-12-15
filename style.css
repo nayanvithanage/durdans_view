@@ -192,3 +192,44 @@ body {
     transform: translateY(2px);
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    #hud {
+        top: 20px;
+        left: 20px;
+    }
+
+    .main-title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    #detail-panel {
+        width: 85%;
+        max-height: 60vh;
+        top: auto;
+        bottom: 20px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        border-radius: 20px;
+        padding: 20px;
+    }
+
+    #detail-panel.hidden {
+        transform: translateX(-50%) translateY(100px);
+        opacity: 0;
+    }
+
+    /* Adjust Back Button position */
+    #back-btn {
+        top: 20px;
+        right: 20px;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
