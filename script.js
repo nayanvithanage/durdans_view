@@ -306,7 +306,7 @@ function initUniverse() {
     });
 
     // Initial Camera Pos - Elevated to see the circle
-    camera.position.set(0, 20, 35); // Elevated view
+    camera.position.set(0, 20, 35);
     controls.target.set(0, 0, 0);
 }
 
@@ -477,23 +477,35 @@ function exitSystem() {
 }
 
 // --- Interaction Logic ---
-// --- Interaction Logic ---
-function onMouseClick(event) {
-    if (detailPanel && !detailPanel.classList.contains('hidden') && event.target.closest('#detail-panel')) return;
+let isDragging = false;
+let startX = 0;
+let startY = 0;
 
-    // Handle both mouse and touch start events
-    let clientX, clientY;
+function onPointerDown(event) {
+    isDragging = false;
+    startX = event.clientX;
+    startY = event.clientY;
+}
 
-    if (event.changedTouches && event.changedTouches.length > 0) {
-        clientX = event.changedTouches[0].clientX;
-        clientY = event.changedTouches[0].clientY;
-    } else {
-        clientX = event.clientX;
-        clientY = event.clientY;
+function onPointerUp(event) {
+    // Calculate distance moved
+    const moveX = Math.abs(event.clientX - startX);
+    const moveY = Math.abs(event.clientY - startY);
+
+    // If moved less than 5 pixels, treat as click
+    if (moveX < 5 && moveY < 5) {
+        handleInteraction(event.clientX, event.clientY);
     }
+}
 
-    mouse.x = (clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+function handleInteraction(clientX, clientY) {
+    if (detailPanel && !detailPanel.classList.contains('hidden') && event.target.closest('#detail-panel')) return; // Ignore panel clicks
+
+    // Robust Coordinate Calculation
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+
     raycaster.setFromCamera(mouse, camera);
 
     if (!isSystemView) {
@@ -515,9 +527,10 @@ function onMouseClick(event) {
     }
 }
 
-// Add touch listener for mobile
-window.addEventListener('touchstart', onMouseClick, { passive: false });
-window.addEventListener('click', onMouseClick);
+// Add Pointer Listeners (Works for Mouse & Touch)
+window.addEventListener('pointerdown', onPointerDown);
+window.addEventListener('pointerup', onPointerUp);
+
 
 function showNodeDetail(node) {
     const sysData = systemsData[currentSystem];
@@ -553,7 +566,6 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
-// Event listeners added above with onMouseClick definition to handle order correctly
 
 // Particles
 const pGeo = new THREE.BufferGeometry();
