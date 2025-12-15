@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Durdans Hospital - Interactive 3D Overview</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Three.js & GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- OrbitControls needs to be loaded separately if using the CDN build commonly -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <!-- HUD / Overlay -->
+    <div id="hud">
+        <h1 class="main-title">DURDANS HOSPITAL</h1>
+        <p class="subtitle">Interactive Research Overview</p>
+        <div class="instructions">Drag to Rotate • Scroll to Zoom • Click Spheres to View Details</div>
+    </div>
+
+    <!-- Detail Panel (Hidden by default) -->
+    <div id="detail-panel" class="hidden">
+        <button id="close-btn">× Close View</button>
+        <h2 id="panel-title">Section Title</h2>
+        <div id="panel-content">
+            <!-- Content will be injected here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

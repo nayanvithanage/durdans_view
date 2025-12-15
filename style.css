@@ -1,0 +1,194 @@
+:root {
+    --primary-color: #0056b3;
+    /* Durdans Blue-ish */
+    --text-color: #e0f0ff;
+    --bg-color: #020205;
+    /* Deep Space Black */
+    --glass-bg: rgba(10, 20, 40, 0.85);
+    --glass-border: 1px solid rgba(100, 200, 255, 0.2);
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-color);
+    /* background: radial-gradient(circle at center, #1a2a3a 0%, #050b14 100%); Removed blue gradient */
+    color: var(--text-color);
+}
+
+#canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#hud {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    z-index: 10;
+    pointer-events: none;
+    /* Let clicks pass through to 3D scene */
+}
+
+.main-title {
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(0, 100, 255, 0.5);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin: 5px 0 0 0;
+    color: #8abce6;
+    letter-spacing: 1px;
+}
+
+.instructions {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+#detail-panel {
+    position: absolute;
+    top: 50%;
+    right: 50px;
+    transform: translateY(-50%);
+    width: 400px;
+    max-height: 80vh;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: var(--glass-border);
+    border-radius: 15px;
+    padding: 30px;
+    z-index: 20;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    overflow-y: auto;
+}
+
+#detail-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) translateX(50px);
+}
+
+#close-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+}
+
+#close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: white;
+}
+
+#panel-title {
+    margin-top: 0;
+    color: #4db8ff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+#panel-content {
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #d0e5f5;
+}
+
+#panel-content h3 {
+    color: #fff;
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+#panel-content ul {
+    padding-left: 20px;
+}
+
+#panel-content li {
+    margin-bottom: 8px;
+}
+
+/* Scrollbar for detail panel */
+#detail-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+#detail-panel::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#detail-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+/* Floating labels in 3D scene */
+.floating-label {
+    position: absolute;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    border: 1px solid rgba(100, 200, 255, 0.3);
+}
+
+.universe-label {
+    position: absolute;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+}
+
+#back-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    z-index: 100;
+    padding: 10px 25px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    display: none;
+}
+
+#back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+    transform: translateY(2px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
