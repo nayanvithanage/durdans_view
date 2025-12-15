@@ -477,11 +477,23 @@ function exitSystem() {
 }
 
 // --- Interaction Logic ---
+// --- Interaction Logic ---
 function onMouseClick(event) {
     if (detailPanel && !detailPanel.classList.contains('hidden') && event.target.closest('#detail-panel')) return;
 
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    // Handle both mouse and touch start events
+    let clientX, clientY;
+
+    if (event.changedTouches && event.changedTouches.length > 0) {
+        clientX = event.changedTouches[0].clientX;
+        clientY = event.changedTouches[0].clientY;
+    } else {
+        clientX = event.clientX;
+        clientY = event.clientY;
+    }
+
+    mouse.x = (clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
 
     if (!isSystemView) {
@@ -502,6 +514,10 @@ function onMouseClick(event) {
         }
     }
 }
+
+// Add touch listener for mobile
+window.addEventListener('touchstart', onMouseClick, { passive: false });
+window.addEventListener('click', onMouseClick);
 
 function showNodeDetail(node) {
     const sysData = systemsData[currentSystem];
@@ -537,7 +553,7 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
-window.addEventListener('click', onMouseClick);
+// Event listeners added above with onMouseClick definition to handle order correctly
 
 // Particles
 const pGeo = new THREE.BufferGeometry();
